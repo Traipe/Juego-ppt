@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" src="/img/favicon.png" >
+  <title>Piedra Papel Tijera 🐾</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ─── Partículas de fondo ─── -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ═══════════════════════════════════
+       PANTALLA 1 · INTRO
+  ════════════════════════════════════ -->
+  <div class="screen active" id="screen-intro">
+    <div class="gif-container">
+      <img src="assets/img/inicio.gif" alt="Gatito jugando">
+    </div>
+    <h1>Piedra Papel Tijera</h1>
+    <p>🐾 La versión gatuna — 3 intentos para ganar 🐾</p>
+    <button class="btn-main" onclick="startGame()">Comenzar</button>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PANTALLA 2 · JUEGO
+  ════════════════════════════════════ -->
+  <div class="screen" id="screen-game">
+
+    <!-- Marcador superior -->
+    <div class="game-header">
+      <div class="score-item">
+        <span class="score-label">Tú</span>
+        <span class="score-value" id="score-player">0</span>
+      </div>
+      <div class="score-item">
+        <span class="score-label">Intentos</span>
+        <div class="dots-container" id="dots">
+          <div class="dot" id="dot-1"></div>
+          <div class="dot" id="dot-2"></div>
+          <div class="dot" id="dot-3"></div>
+        </div>
+      </div>
+      <div class="score-item">
+        <span class="score-label">CPU</span>
+        <span class="score-value" id="score-cpu">0</span>
+      </div>
+    </div>
+
+    <p class="game-title">Elige tu patita</p>
+
+    <!-- Área de batalla -->
+    <div class="battle-area">
+      <div class="player-card">
+        <span class="player-label">Tú</span>
+        <div class="choice-display" id="display-player">
+          <svg viewBox="0 0 100 100" fill="none">
+            <text x="50" y="60" text-anchor="middle" font-size="40">❓</text>
+          </svg>
+        </div>
+      </div>
+      <span class="vs-badge">VS</span>
+      <div class="player-card">
+        <span class="player-label">CPU</span>
+        <div class="choice-display" id="display-cpu">
+          <svg viewBox="0 0 100 100" fill="none">
+            <text x="50" y="60" text-anchor="middle" font-size="40">❓</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje de resultado de ronda -->
+    <div class="round-msg" id="round-msg"></div>
+
+    <!-- Botones de elección -->
+    <div class="choices-row">
+
+      <!-- Piedra -->
+      <button class="choice-btn" id="btn-rock" onclick="play('rock')">
+        <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="28" y="30" width="14" height="20" rx="7" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="44" y="25" width="14" height="20" rx="7" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="60" y="30" width="14" height="20" rx="7" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="22" y="42" width="58" height="52" rx="16" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <ellipse cx="51" cy="76" rx="16" ry="12" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="31" cy="60" rx="7" ry="5.5" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="51" cy="57" rx="7" ry="5.5" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="71" cy="60" rx="7" ry="5.5" fill="#ff8ec4" opacity="0.9"/>
+        </svg>
+        Piedra
+      </button>
+
+      <!-- Papel -->
+      <button class="choice-btn" id="btn-paper" onclick="play('paper')">
+        <svg viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="24" y="10" width="13" height="50" rx="6.5" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="39" y="5"  width="13" height="55" rx="6.5" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="54" y="8"  width="13" height="52" rx="6.5" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="18" y="50" width="65" height="62" rx="18" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <ellipse cx="50" cy="90" rx="18" ry="13" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="29" cy="72" rx="7.5" ry="6" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="50" cy="68" rx="7.5" ry="6" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="71" cy="72" rx="7.5" ry="6" fill="#ff8ec4" opacity="0.9"/>
+        </svg>
+        Papel
+      </button>
+
+      <!-- Tijera -->
+      <button class="choice-btn" id="btn-scissors" onclick="play('scissors')">
+        <svg viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="24" y="8"  width="13" height="52" rx="6.5" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="54" y="8"  width="13" height="52" rx="6.5" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <path d="M28 8 L24 0 M36 8 L40 0" stroke="#ff65e0" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M58 8 L54 0 M66 8 L70 0" stroke="#ff65e0" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="39" y="42" width="13" height="30" rx="6.5" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <rect x="18" y="55" width="65" height="60" rx="18" fill="#1a1a1a" stroke="#ff65e0" stroke-width="2.5"/>
+          <ellipse cx="50" cy="93" rx="18" ry="13" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="29" cy="74" rx="7"   ry="5.5" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="50" cy="70" rx="7"   ry="5.5" fill="#ff8ec4" opacity="0.9"/>
+          <ellipse cx="71" cy="74" rx="7"   ry="5.5" fill="#ff8ec4" opacity="0.9"/>
+        </svg>
+        Tijera
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PANTALLA 3 · DERROTA
+  ════════════════════════════════════ -->
+  <div class="screen" id="screen-lose">
+    <div class="end-img-container end-img--lose">
+      <img src="assets/img/perdiste.png" alt="Perdiste">
+    </div>
+    <div class="end-title end-title--lose">¡Perdiste!</div>
+    <div class="end-score" id="lose-score"></div>
+    <button class="btn-main btn-main--secondary" onclick="goHome()">Volver al inicio</button>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PANTALLA 4 · EMPATE
+  ════════════════════════════════════ -->
+  <div class="screen" id="screen-draw">
+    <div class="end-img-container end-img--draw">
+      <img src="assets/img/empate.png" alt="Empate">
+    </div>
+    <div class="end-title end-title--draw">¡Empate! 🐾</div>
+    <div class="end-score" id="draw-score"></div>
+    <button class="btn-main btn-main--secondary" onclick="goHome()">Volver al inicio</button>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PANTALLA 5 · VICTORIA
+  ════════════════════════════════════ -->
+  <div class="screen" id="screen-win">
+    <div class="stars-container" id="stars"></div>
+    <div class="end-img-container end-img--win">
+      <img src="assets/img/ganasteeee.png" alt="Ganaste">
+    </div>
+    <div class="end-title end-title--win">¡Ganaste! 🎉</div>
+    <div class="end-score" id="win-score"></div>
+    <button class="btn-main" onclick="goHome()">Jugar de nuevo</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

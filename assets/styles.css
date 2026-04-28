@@ -1,0 +1,422 @@
+/* ============================================================
+   PIEDRA PAPEL TIJERA — ESTILOS
+   ============================================================
+   PALETA DE COLORES
+   --c1  #001c00   Verde muy oscuro  → fondo principal
+   --c2  #004d3c   Verde oscuro      → cards y paneles
+   --c3  #ff65e0   Rosa neón         → acentos principales
+   --c4  #ff8ec4   Rosa claro        → labels y almohadillas
+   --c5  #ffcdab   Durazno / crema   → texto secundario
+   ============================================================ */
+
+/* ─── Variables globales ─── */
+:root {
+  --c1: #001c00;
+  --c2: #004d3c;
+  --c3: #ff65e0;
+  --c4: #ff8ec4;
+  --c5: #ffcdab;
+  --font-title: 'Fredoka One', cursive;
+  --font-body:  'Nunito', sans-serif;
+}
+
+/* ─── Reset ─── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--c1);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ============================================================
+   PANTALLAS — sistema de navegación
+   Solo la pantalla con clase .active se muestra.
+   ============================================================ */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+.screen.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   PANTALLA 1 · INTRO
+   ============================================================ */
+#screen-intro {
+  gap: 0;
+}
+#screen-intro .gif-container {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid var(--c3);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--c3) 33%, transparent);
+  margin-bottom: 1.5rem;
+}
+#screen-intro .gif-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#screen-intro h1 {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--c4);
+  text-shadow: 0 0 20px color-mix(in srgb, var(--c3) 53%, transparent);
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+#screen-intro p {
+  color: var(--c5);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   PANTALLA 2 · JUEGO
+   ============================================================ */
+#screen-game {
+  gap: 1.2rem;
+}
+
+/* — Cabecera con marcador — */
+.game-header {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--c2);
+  border-radius: 50px;
+  border: 2px solid color-mix(in srgb, var(--c3) 27%, transparent);
+}
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score-label {
+  font-size: 0.7rem;
+  color: var(--c4);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.score-value {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--c5);
+  line-height: 1;
+}
+
+/* — Puntos de intentos — */
+.dots-container {
+  display: flex;
+  gap: 6px;
+}
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--c3);
+  box-shadow: 0 0 8px var(--c3);
+  transition: all 0.3s;
+}
+.dot.used {
+  background: var(--c2);
+  box-shadow: none;
+  border: 2px solid color-mix(in srgb, var(--c3) 33%, transparent);
+}
+
+/* — Título del juego — */
+.game-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  color: var(--c4);
+  letter-spacing: 1px;
+}
+
+/* — Área de batalla — */
+.battle-area {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.player-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c4);
+}
+
+/* — Cuadros que muestran la elección — */
+.choice-display {
+  width: 140px;
+  height: 140px;
+  background: var(--c2);
+  border-radius: 24px;
+  border: 2px solid color-mix(in srgb, var(--c3) 33%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+.choice-display.reveal {
+  border-color: var(--c3);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--c3) 27%, transparent);
+  transform: scale(1.05);
+}
+.choice-display svg {
+  width: 90px;
+  height: 90px;
+}
+
+.vs-badge {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: var(--c5);
+  opacity: 0.6;
+}
+
+/* — Mensaje de resultado por ronda — */
+.round-msg {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  min-height: 2rem;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.round-msg.win  { color: var(--c3); text-shadow: 0 0 15px color-mix(in srgb, var(--c3) 40%, transparent); }
+.round-msg.lose { color: #ff5555; }
+.round-msg.draw { color: var(--c5); }
+
+/* — Botones de elección (Piedra / Papel / Tijera) — */
+.choices-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.choice-btn {
+  width: 100px;
+  height: 100px;
+  background: var(--c2);
+  border: 2px solid color-mix(in srgb, var(--c3) 27%, transparent);
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--c5);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.choice-btn:hover {
+  border-color: var(--c3);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--c3) 33%, transparent);
+  transform: translateY(-4px) scale(1.05);
+}
+.choice-btn:active  { transform: scale(0.97); }
+.choice-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.choice-btn svg {
+  width: 52px;
+  height: 52px;
+}
+
+/* ============================================================
+   PANTALLAS DE FIN (Derrota · Empate · Victoria)
+   ============================================================ */
+#screen-lose,
+#screen-win,
+#screen-draw {
+  gap: 1.5rem;
+}
+
+/* — Contenedor de imagen de resultado — */
+.end-img-container {
+  width: 260px;
+  height: 260px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 4px solid var(--c3);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--c3) 33%, transparent);
+}
+.end-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bordes específicos por resultado */
+.end-img--lose { border-color: #ff5555; box-shadow: 0 0 30px #ff555544; }
+.end-img--draw { border-color: var(--c5); box-shadow: 0 0 30px color-mix(in srgb, var(--c5) 33%, transparent); }
+.end-img--win  {
+  border-color: var(--c3);
+  /* Oscurecer imagen para hacer el gato negro */
+  filter: grayscale(1) brightness(0.2) sepia(1) hue-rotate(200deg) saturate(10);
+}
+.end-img--win img { filter: none; }
+
+/* — Título de pantalla de fin — */
+.end-title {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  letter-spacing: 3px;
+}
+.end-title--lose { color: #ff5555; text-shadow: 0 0 20px #ff555588; }
+.end-title--draw { color: var(--c5); text-shadow: 0 0 20px color-mix(in srgb, var(--c5) 53%, transparent); }
+.end-title--win  { color: var(--c3); text-shadow: 0 0 20px color-mix(in srgb, var(--c3) 53%, transparent); }
+
+/* — Subtítulo con puntaje final — */
+.end-score {
+  color: var(--c5);
+  font-size: 1.1rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   BOTONES GENERALES
+   ============================================================ */
+.btn-main {
+  padding: 0.9rem 2.5rem;
+  background: var(--c3);
+  color: var(--c1);
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--c3) 33%, transparent);
+  text-transform: uppercase;
+}
+.btn-main:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--c3) 47%, transparent);
+}
+.btn-main:active { transform: scale(0.97); }
+
+.btn-main--secondary {
+  background: transparent;
+  color: var(--c4);
+  border: 2px solid var(--c4);
+  box-shadow: none;
+}
+.btn-main--secondary:hover {
+  background: color-mix(in srgb, var(--c4) 13%, transparent);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--c4) 27%, transparent);
+}
+
+/* ============================================================
+   PARTÍCULAS DECORATIVAS DE FONDO
+   ============================================================ */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0.15;
+}
+@keyframes float {
+  0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.15; }
+  90%  { opacity: 0.15; }
+  100% { transform: translateY(-20px) rotate(720deg); opacity: 0; }
+}
+
+/* ============================================================
+   ANIMACIONES DE RESULTADO DE RONDA
+   ============================================================ */
+
+/* Sacudida cuando pierde */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX( 8px); }
+  60%       { transform: translateX(-6px); }
+  80%       { transform: translateX( 6px); }
+}
+.shake { animation: shake 0.5s ease; }
+
+/* Rebote cuando gana */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  30%       { transform: translateY(-16px); }
+  60%       { transform: translateY(-8px); }
+}
+.bounce { animation: bounce 0.6s ease; }
+
+/* ============================================================
+   ESTRELLAS DE VICTORIA
+   ============================================================ */
+.stars-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  color: var(--c3);
+  font-size: 20px;
+  animation: starfall 2s ease forwards;
+  opacity: 0;
+}
+@keyframes starfall {
+  0%   { opacity: 1; transform: translateY(0)    rotate(0deg)   scale(1); }
+  100% { opacity: 0; transform: translateY(200px) rotate(360deg) scale(0); }
+}
